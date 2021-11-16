@@ -1,19 +1,17 @@
-# compiler:
 CC = gcc
+EXEC = run
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -fanalyzer
 
-# compiler flags: 
-CFLAGS  = -Wall -Wextra -Werror -Wpedantic -fanalyzer
+SRC = $(wildcard bin/*.c)
+OBJ = $(SRC:.c=.o)
 
-# the build target executable:
-TARGET = run
+all: $(EXEC)
 
-# object files to build:
-SRC = $(wildcard ./bin/*c)
+%.o: %.c
+	$(CC) -o $@ -c $<
 
-all: $(TARGET)
+$(EXEC): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
-
-clean:
-	rm $(TARGET)
+clean: 
+	rm *.o $(OBJ)
