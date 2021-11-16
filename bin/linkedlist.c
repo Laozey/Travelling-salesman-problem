@@ -16,7 +16,6 @@ Linkedlist_t *create_list(char *p, int city_count)
     assert(lst->cities);
 
     char *line = NULL, code[6], nc[2];
-
     size_t len = 0;
     ssize_t read;
     FILE *fd;
