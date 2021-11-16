@@ -14,4 +14,5 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean: 
-	rm *.o $(OBJ)
+	rm $(EXEC)
+	rm ./bin/*.o $(OBJ)
