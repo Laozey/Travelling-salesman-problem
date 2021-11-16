@@ -15,4 +15,4 @@ $(EXEC): $(OBJ)
 
 clean: 
 	rm $(EXEC)
-	rm ./bin/*.o $(OBJ)
+	rm bin/*.o
