@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "../headers/linkedlist.h"
+#include "../headers/vertexfunc.h"
 
 int main(void)
 {
