@@ -1,20 +1,25 @@
-typedef struct City
+typedef struct Vertex Vertex_t;
+
+typedef struct Cell
+{
+    Vertex_t *v;
+    struct Cell *next;
+} Cell_t;
+typedef Cell_t *Linkedlist_t;
+
+typedef struct Vertex
 {
     u_int8_t code;
-    u_int8_t neighbor_count;
-    u_int8_t *neighbours;
-} City_t;
+    Linkedlist_t succ;
+} Vertex_t;
 
-typedef struct Linkedlist
-{
-    u_int8_t city_count;
-    City_t **cities;
-} Linkedlist_t;
+Cell_t* create_cell();
+void free_cell(Cell_t*);
 
-Linkedlist_t *create_list(char *, int);
+Linkedlist_t* create_linkedlist(u_int8_t);
+void free_linkedlist(Linkedlist_t*);
 
-// Prend une chaine de charactère et ajoute cette ville et ses successeurs
-void add_cities(Linkedlist_t *, int, int, char *);
+Vertex_t *create_vertex(u_int8_t);
+void free_vertex(Vertex_t *);
+void debug_vertex_code(Vertex_t *);
 
-void free_city(City_t *);
-void free_linkedlist(Linkedlist_t *);

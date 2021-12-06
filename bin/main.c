@@ -5,10 +5,11 @@
 
 int main(void)
 {
-   Linkedlist_t *lst = create_list("./data/cities", 1);
-   
-   
-   free_linkedlist(lst);
+   Vertex_t* v = create_vertex(42);
+
+   debug_vertex_code(v);
+
+   free_vertex(v);
    
    return 0;
 }

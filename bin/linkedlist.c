@@ -5,79 +5,58 @@
 #include <assert.h>
 #include "../headers/linkedlist.h"
 
-// TODO: tout changer en fonction du fichier .h
-
-Linkedlist_t *create_list(char *p, int city_count)
+Cell_t *create_cell()
 {
-    Linkedlist_t *lst = (Linkedlist_t *)malloc(sizeof(Linkedlist_t));
-    assert(lst);
-    lst->city_count = 0;
-    lst->cities = (City_t **)malloc(sizeof(City_t *) * city_count);
-    assert(lst->cities);
+    Cell_t *c = (Cell_t *)malloc(sizeof(Cell_t));
 
-    char *line = NULL, code[6], nc[2];
-    size_t len = 0;
-    ssize_t read;
-    FILE *fd;
+    c->v = NULL;
+    c->next = NULL;
 
-    fd = fopen(p, "r");
-
-    if (fd == NULL)
-        exit(EXIT_FAILURE);
-
-    if ((read = getline(&line, &len, fd)) != -1)
-    {
-        strncpy(code, line, 5);
-        code[5] = '\0';
-        strncpy(nc, line + 5, 1);
-        nc[1] = '\0';
-        add_cities(lst, atoi(code), atoi(nc), line + 6);
-    }
-
-    if (line)
-        free(line);
-
-    fclose(fd);
-
-    return lst;
+    return c;
 }
 
-void add_cities(Linkedlist_t *l, int code, int nc, char *neigh)
+void free_cell(Cell_t *c)
 {
-    char neighbor[6];
-    int offset = 0;
-    City_t *c = (City_t *)malloc(sizeof(City_t));
-    assert(c);
-    c->code = code - 95500;
-    c->neighbor_count = nc;
-    c->neighbours = (u_int8_t *)malloc(sizeof(u_int8_t) * c->neighbor_count);
-    assert(c->neighbours);
-
-    for (size_t i = 0; i < c->neighbor_count; i++)
+    if (c)
     {
-        strncpy(neighbor, neigh + offset, 5);
-        neighbor[5] = '\0';
-        c->neighbours[i] = atoi(neighbor);
-
-        offset += 5;
+        if (c->v)
+            free_vertex(c->v);
+        if (c->next)
+            free_cell(c->next);
+        free(c);
     }
-
-    l->cities[l->city_count] = c;
-    l->city_count += 1;
 }
 
-void free_city(City_t *c)
+Linkedlist_t *create_linkedlist(u_int8_t city_count)
 {
-    free(c->neighbours);
-    free(c);
+    Linkedlist_t *l = (Linkedlist_t *)malloc(sizeof(Linkedlist_t) * city_count);
+
+    return l;
 }
 
 void free_linkedlist(Linkedlist_t *l)
 {
-    for (size_t i = 0; i < l->city_count; i++)
-    {
-        free_city(l->cities[i]);
-    }
-    free(l->cities);
+    free_cell(*l);
     free(l);
+}
+
+Vertex_t *create_vertex(u_int8_t code)
+{
+    Vertex_t *v = (Vertex_t *)malloc(sizeof(Vertex_t));
+
+    v->code = code;
+    v->succ = NULL;
+
+    return v;
+}
+
+void free_vertex(Vertex_t *v)
+{
+    if (v)
+        free(v);
+}
+
+void debug_vertex_code(Vertex_t *v)
+{
+    printf("%d\n", v->code);
 }

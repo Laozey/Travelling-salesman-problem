@@ -1,9 +1,0 @@
-Vous prendrez sur le site national les données concernant les adjacences des villes françaises
-(https://www.data.gouv.fr/fr/datasets/liste-des-adjacences-des-communes-francaises/).
-Vous travaillerez sur un seul département, le Val d’Oise.
-Résoudre aussi bien que possible le problème du voyageur de commerce, Lis et Brin.
-
-
-[ A, B, C, D, ... ]
-e.g: A => Sommet = u_int8_t
-       => Succeseurs = [ Sommet_t* sommet, Cell_t* suiv ]
