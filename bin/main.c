@@ -1,8 +1,8 @@
-#include "../headers/vertexfunc.h"
+#include "../headers/sommetfunc.h"
 
 int main(void)
 {
-   Vertex_t* v = create_vertex(42);
+   Sommet_t* v = create_vertex(42);
 
    debug_vertex_code(v);
 
