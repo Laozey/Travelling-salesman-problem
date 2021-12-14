@@ -1,17 +1,16 @@
 #include <stdlib.h>
 
-typedef struct Sommet Sommet_t;
-
-typedef struct Noeud
+typedef struct Node
 {
-    Sommet_t *s;
-    struct Noeud *next;
-} Noeud_t;
-typedef Noeud_t *Successeur;
+    struct Vertex *s;
+    struct Node *next;
+} Node_t;
+typedef Node_t *Successor;
 
-typedef struct Sommet
+typedef struct Vertex
 {
     u_int8_t code;
-    float distance;
-    Successeur succ;
-} Sommet_t;
+    float dist;
+    Successor succ;
+} Vertex_t;
+typedef struct Vertex Vertex_t;

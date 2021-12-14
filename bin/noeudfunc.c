@@ -1,8 +1,8 @@
-#include "../headers/sommetfunc.h"
+#include "../headers/vertexfunc.h"
 
-Noeud_t *create_noeud()
+Node_t *create_node()
 {
-    Noeud_t *c = (Noeud_t *)malloc(sizeof(Noeud_t));
+    Node_t *c = (Node_t *)malloc(sizeof(Node_t));
 
     c->s = NULL;
     c->next = NULL;
@@ -10,27 +10,27 @@ Noeud_t *create_noeud()
     return c;
 }
 
-void free_noeud(Noeud_t *c)
+void free_node(Node_t *c)
 {
     if (c)
     {
         if (c->s)
-            free_sommet(c->s);
+            free_vertex(c->s);
         if (c->next)
-            free_noeud(c->next);
+            free_node(c->next);
         free(c);
     }
 }
 
-Successeur *creer_successeur(u_int8_t city_count)
+Successor *create_successor(u_int8_t city_count)
 {
-    Successeur *l = (Successeur *)malloc(sizeof(Successeur) * city_count);
+    Successor *l = (Successor *)malloc(sizeof(Successor) * city_count);
 
     return l;
 }
 
-void free_successeur(Successeur *l)
+void free_successor(Successor *l)
 {
-    free_noeud(*l);
+    free_node(*l);
     free(l);
 }

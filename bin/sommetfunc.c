@@ -1,9 +1,9 @@
-#include "../headers/sommetfunc.h"
+#include "../headers/vertexfunc.h"
 #include <stdio.h>
 
-Sommet_t *create_vertex(u_int8_t code)
+Vertex_t *create_vertex(u_int8_t code)
 {
-    Sommet_t *v = (Sommet_t *)malloc(sizeof(Sommet_t));
+    Vertex_t *v = (Vertex_t *)malloc(sizeof(Vertex_t));
 
     v->code = code;
     v->succ = NULL;
@@ -11,13 +11,13 @@ Sommet_t *create_vertex(u_int8_t code)
     return v;
 }
 
-void free_vertex(Sommet_t *v)
+void free_vertex(Vertex_t *v)
 {
     if (v)
         free(v);
 }
 
-void debug_vertex_code(Sommet_t *v)
+void print_vertex_code(Vertex_t *v)
 {
     printf("%d\n", v->code);
 }

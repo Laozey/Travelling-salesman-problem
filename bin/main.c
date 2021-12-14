@@ -1,10 +1,10 @@
-#include "../headers/sommetfunc.h"
+#include "../headers/vertexfunc.h"
 
 int main(void)
 {
-   Sommet_t* v = create_vertex(42);
+   Vertex_t* v = create_vertex(42);
 
-   debug_vertex_code(v);
+   print_vertex_code(v);
 
    free_vertex(v);
    
