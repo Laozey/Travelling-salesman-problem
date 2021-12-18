@@ -4,7 +4,7 @@ Node_t *create_node()
 {
     Node_t *c = (Node_t *)malloc(sizeof(Node_t));
 
-    c->s = NULL;
+    c->v = NULL;
     c->next = NULL;
 
     return c;
@@ -14,8 +14,8 @@ void free_node(Node_t *c)
 {
     if (c)
     {
-        if (c->s)
-            free_vertex(c->s);
+        if (c->v)
+            free_vertex(c->v);
         if (c->next)
             free_node(c->next);
         free(c);

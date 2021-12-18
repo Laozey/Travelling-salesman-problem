@@ -1,5 +1,4 @@
 #include "../headers/vertexfunc.h"
-#include <stdio.h>
 
 Vertex_t *create_vertex(u_int8_t code)
 {
