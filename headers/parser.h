@@ -4,9 +4,13 @@
 #include <string.h>
 #include "../headers/vertexfunc.h"
 
+#define INEE_MIN 95002
+#define INEE_MAX 95690
+#define SIZE (INEE_MAX - INEE_MIN + 1)
+
 typedef struct Data
 {
-    Vertex_t *isAlocated;
+    int isAlocated;
     int inee;
     float lat;
     float lon;
@@ -14,7 +18,13 @@ typedef struct Data
     int *neighbors;
 } Data_t;
 
-Data_t **parseFile(const char *file_path, const char *departement, int INEE_MAX, int INEE_MIN);
-void treatLine(Data_t **data, char *line, const char *departement, int INEE_MIN);
-void freeData(Data_t **data, int size);
+typedef struct Matrice
+{
+    int size;
+    Data_t *datas;
+} Matrice_t;
+
+Matrice_t *parseFile(const char *file_path);
+void treatLine(Matrice_t *matrice, char *line);
+void freeData(Matrice_t *matrice);
 int isInDepartement(const char *departement, char *inee);

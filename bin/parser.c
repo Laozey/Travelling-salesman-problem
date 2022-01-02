@@ -1,70 +1,75 @@
 #include "../headers/parser.h"
 
-Data_t **parseFile(const char *file_path, const char *departement, int INEE_MIN, int size)
+Matrice_t *parseFile(const char *file_path)
 {
     FILE *fp = fopen(file_path, "r");
     assert(fp);
 
-    Data_t **data = malloc(sizeof(Data_t *) * size);
-    for (int i = 0; i < size; i++)
+    Matrice_t *matrice = malloc(sizeof(Matrice_t));
+    matrice->datas = malloc(sizeof(Data_t) * SIZE);
+    matrice->size = 0;
+    assert(matrice);
+
+    // used to delocate neighbors in free
+    for (int i = 0; i < SIZE; i++)
     {
-        data[i] = malloc(sizeof(Data_t));
-        data[i]->inee = -1;
+        matrice->datas[i].inee = -1;
     }
-    assert(data);
 
     char *line = NULL;
     size_t len = 0;
     while ((getline(&line, &len, fp)) != -1)
     {
-        treatLine(data, line, departement, INEE_MIN);
+        treatLine(matrice, line);
     }
 
     if (line)
         free(line);
 
     fclose(fp);
-    return data;
+    return matrice;
 }
 
-void treatLine(Data_t **data, char *line, const char *departement, int INEE_MIN)
+void treatLine(Matrice_t *matrice, char *line)
 {
     const char *separators = ",";
-    char* inee_neighbor;
+    char *inee_neighbor;
     int code, idx, nbn;
+
     char *inee_s = strtok(line, separators);
-    if (!isInDepartement(departement, inee_s))
+    if (!isInDepartement("95", inee_s))
         return;
+    ++matrice->size;
     code = atoi(inee_s);
     idx = code - INEE_MIN;
-    data[idx]->inee = code;
-    data[idx]->lat = atof(strtok(NULL, separators));
-    data[idx]->lon = atof(strtok(NULL, separators));
+    matrice->datas[idx].inee = code;
+    matrice->datas[idx].lat = atof(strtok(NULL, separators));
+    matrice->datas[idx].lon = atof(strtok(NULL, separators));
 
     nbn = atoi(strtok(NULL, separators));
-    data[idx]->nb_neighbors = nbn;
-    data[idx]->neighbors = malloc(sizeof(int) * nbn);
-    assert(data[idx]->neighbors);
+    matrice->datas[idx].neighbors = malloc(sizeof(int) * nbn);
+    matrice->datas[idx].nb_neighbors = nbn;
+    assert(matrice->datas[idx].neighbors);
     do
     {
         inee_neighbor = strtok(NULL, separators);
-        if (isInDepartement(departement, inee_neighbor))
-            data[idx]->neighbors[--nbn] = atoi(inee_neighbor);
+        if (isInDepartement("95", inee_neighbor))
+            matrice->datas[idx].neighbors[--nbn] = atoi(inee_neighbor);
         else
-            data[idx]->neighbors[--nbn] = -1;
+            matrice->datas[idx].neighbors[--nbn] = -1;
     } while (nbn);
-    data[idx]->isAlocated = NULL;
+    matrice->datas[idx].isAlocated = -1;
 }
 
-void freeData(Data_t **data, int size)
+void freeData(Matrice_t *matrice)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < SIZE; i++)
     {
-        if (data[i]->inee != -1)
-            free(data[i]->neighbors);
-        free(data[i]);
+        if (matrice->datas[i].inee != -1)
+            free(matrice->datas[i].neighbors);
     }
-    free(data);
+    free(matrice->datas);
+    free(matrice);
 }
 
 int isInDepartement(const char *departement, char *inee)

@@ -8,11 +8,11 @@ OBJ = $(SRC:.c=.o)
 all: $(EXEC)
 
 %.o: %.c
-	$(CC) -o $@ -c $<
+	$(CC) -o $@ -c $< -g
 
 $(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 clean: 
-	rm $(EXEC)
 	rm bin/*.o
+	rm $(EXEC)

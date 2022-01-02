@@ -1,28 +1,41 @@
-#include "../headers/parser.h"
+#include "../headers/graph.h"
 
 int main(int argc, char const *argv[])
 {
-   if (argc != 5)
+   if (argc != 2)
    {
-      printf("usage: ./run <file> <code département> <INEE_MIN> <INEE_MAX>\n");
+      printf("usage: ./run <file>\n");
       exit(1);
    }
-   int INEE_MIN = atoi(argv[3]), INEE_MAX = atoi(argv[4]), size = INEE_MAX - INEE_MIN + 1;
 
-   Data_t **data = parseFile(argv[1], argv[2], INEE_MIN, size);
-   
+   Matrice_t *matrice = parseFile(argv[1]);
+
    // debug purpose
-   // for (int i = 0; i < size; i++) {
-   //    if (data[i]->neighbors) {
-   //       printf("%d - [%f , %f] {", data[i]->inee, data[i]->lat, data[i]->lon);
-   //       for (int j = 0; j < data[i]->nb_neighbors; j++) {
-   //          printf(" %d ", data[i]->neighbors[j]);
+   int i, j;
+   // for (i = 0; i < SIZE; i++)
+   // {
+   //    if (matrice->datas[i].inee != -1)
+   //    {
+   //       printf("%d - %d - [%f , %f] {", i, matrice->datas[i].inee, matrice->datas[i].lat, matrice->datas[i].lon);
+   //       for (j = 0; j < matrice->datas[i].nb_neighbors; j++)
+   //       {
+   //          printf(" %d ", matrice->datas[i].neighbors[j]);
    //       }
    //       printf("}\n");
    //    }
    // }
+   // printf("%d\n", matrice->size);
 
-   freeData(data, size);
+   Graph_t *graph = createGraph(matrice);
+
+   // debug purpose
+   for (int i = 0; i < graph->size; i++)
+   {
+      printf("%f\n", graph->vertices[i].succ->dist);
+   }
+
+   freeData(matrice);
+   // freeGraph(graph);
 
    return 0;
 }
