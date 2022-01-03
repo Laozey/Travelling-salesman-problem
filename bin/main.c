@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
    Matrice_t *matrice = parseFile(argv[1]);
 
    // debug purpose
-   int i, j;
+   // int i, j;
    // for (i = 0; i < SIZE; i++)
    // {
    //    if (matrice->datas[i].inee != -1)
@@ -29,13 +29,14 @@ int main(int argc, char const *argv[])
    Graph_t *graph = createGraph(matrice);
 
    // debug purpose
-   for (int i = 0; i < graph->size; i++)
-   {
-      printf("%f\n", graph->vertices[i].succ->dist);
-   }
+   // for (int i = 0; i < graph->size; i++)
+   // {
+   //    printf("%d - %d\n",graph->vertices[i].code, graph->vertices[i].succ->v->code);
+   //    printf("%f\n", graph->vertices[i].succ->dist);
+   // }
 
    freeData(matrice);
-   // freeGraph(graph);
+   freeGraph(graph);
 
    return 0;
 }
